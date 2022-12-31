@@ -35,9 +35,8 @@ jobs:
           #   ChrisCarini
           PR_LABELS: |
             repo-file-sync
-          ORIGINAL_MESSAGE: true
-          COMMIT_EACH_FILE: false
           CONFIG_PATH: sync.yml
+          COMMIT_AS_PR_TITLE: true
           GH_PAT: ${{ secrets.GH_PAT_REPO_WORKFLOW_SCOPE }}
 
       - name: List PRs
