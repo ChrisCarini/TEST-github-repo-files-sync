@@ -1,0 +1,45 @@
+group:
+  ##################
+  #   Dependabot   #
+  ##################
+  # dependabot config - Gradle + GitHub Actions
+  - files:
+      - source: dependabot/dependabot-gradle-and-github-actions.yml
+        dest: .github/dependabot.yml
+    # Place `ChrisCarini/TEST-sample-intellij-plugin` first as it is a test repo and typically we want to look at this PR first.
+    repos: |
+      ChrisCarini/TEST-sample-intellij-plugin
+
+  #############################
+  #   Update Gradle Wrapper   #
+  #############################
+  # Update Gradle Wrapper - common
+  - files:
+      - source: github/workflows/update-gradle-wrapper.yml
+        dest: .github/workflows/update-gradle-wrapper.yml
+    # Place `ChrisCarini/TEST-sample-intellij-plugin` first as it is a test repo and typically we want to look at this PR first.
+    repos: |
+      ChrisCarini/TEST-sample-intellij-plugin
+
+  ##########################################
+  #   JetBrains Plugin - Build & Release   #
+  ##########################################
+  - files:
+      # JetBrains Plugin - Build + Release Draft
+      - source: github/workflows/jetbrains-build.yml
+        dest: .github/workflows/build.yml
+      # JetBrains Plugin - Compatibility
+      - source: github/workflows/jetbrains-compatibility.yml
+        dest: .github/workflows/compatibility.yml
+      # JetBrains Plugin - Release
+      - source: github/workflows/jetbrains-release.yml
+        dest: .github/workflows/release.yml
+      # JetBrains Plugin - Update Platform Version
+      - source: github/workflows/jetbrains-update-plugin-platform-version.yml
+        dest: .github/workflows/update-plugin-platform-version.yml
+      # JetBrains Plugin - Standard JetBrains build.gradle
+      - source: gradle/standard_jetbrains_plugin/build.gradle
+        dest: build_standard_jetbrains_plugin_build.gradle
+    # Place `ChrisCarini/TEST-sample-intellij-plugin` first as it is a test repo and typically we want to look at this PR first.
+    repos: |
+      ChrisCarini/TEST-sample-intellij-plugin

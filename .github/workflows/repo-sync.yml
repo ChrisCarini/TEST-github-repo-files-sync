@@ -1,0 +1,47 @@
+name: Repo Sync
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+
+  ##############################
+  #       SYNC REPO FILES      #
+  ##############################
+  sync_repo_files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+
+      - name: Run Repo File Sync Action
+        id: repo-file-sync
+#        Use my own fork for now, as I want to try out a few new features I'm adding...
+#        uses: BetaHuhn/repo-file-sync-action@v1
+        uses: ChrisCarini/repo-file-sync-action@main
+        with:
+          ASSIGNEES: |
+            ChrisCarini
+          # NOTE: As much as I would like to be marked to review each of these, because
+          # this GitHub Action uses a PAT, the commit is coming from myself (ie, `ChrisCarini`)
+          # and thus, trying to set myself as a reviewer yields the below error message:
+          #
+          #   "Error: Review cannot be requested from pull request author."
+          #
+          # REVIEWERS: |
+          #   ChrisCarini
+          PR_LABELS: |
+            repo-file-sync
+          ORIGINAL_MESSAGE: true
+          COMMIT_EACH_FILE: false
+          CONFIG_PATH: sync.yml
+          GH_PAT: ${{ secrets.GH_PAT_REPO_WORKFLOW_SCOPE }}
+
+      - name: List PRs
+        run: |
+          echo "${STEPS__REPO_FILE_SYNC__OUTPUTS__PULL_REQUEST_URLS}" | jq .
+        env:
+          STEPS__REPO_FILE_SYNC__OUTPUTS__PULL_REQUEST_URLS: "${{ steps.repo-file-sync.outputs.pull_request_urls }}"
