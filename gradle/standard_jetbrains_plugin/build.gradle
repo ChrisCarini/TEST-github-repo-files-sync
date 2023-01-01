@@ -257,4 +257,4 @@ dependencies {
 // Configure IntelliJ to be aware of Groovy and Gradle APIs to allow resolution and code completion of symbols in build.gradle
 idea.module {
     scopes.PROVIDED.plus += [configurations.provided]
-}
+}test change 4
